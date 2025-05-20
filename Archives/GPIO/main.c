@@ -13,17 +13,17 @@
 enum eKeyboardState {RELASED,BUTTON_0,BUTTON_1,BUTTON_2,BUTTON_3};
 enum eDirection {LEFT, RIGHT};
 
-
 void Delay(unsigned int uiMilliSeconds){
+	
 	unsigned int uiSecondsLimit;
 	unsigned int uiHelpCounter = uiMilliSeconds *12000;
+	
 	for(uiSecondsLimit = 0 ; uiSecondsLimit<uiHelpCounter ; uiSecondsLimit++){}
 }
 
 void LedInit(){
 	IO1DIR = IO1DIR | ALL_LEDS_bm;
 	IO1SET=LED0_bm;
-	Delay(250);
 }
 
 void LedOn(unsigned char ucLedIndex) {
@@ -40,16 +40,16 @@ void KeyboardInit() {
 }
 
 enum eKeyboardState eKeyboardRead(){
-	if((IO0PIN & BUTTON_S0_bm)==0){
+	if((BUTTON_S0_bm & IO0PIN)==0){
 		return BUTTON_0;
 	}
-	else if ((IO0PIN & BUTTON_S1_bm)==0){
+	else if ((BUTTON_S1_bm & IO0PIN)==0){
 		return BUTTON_1;
 	}
-	else if ((IO0PIN & BUTTON_S2_bm)==0){
+	else if ((BUTTON_S2_bm & IO0PIN)==0){
 		return BUTTON_2;
 	}
-	else if ((IO0PIN & BUTTON_S3_bm)==0){
+	else if ((BUTTON_S3_bm & IO0PIN)==0){
 		return BUTTON_3;
 	}
 	else{
@@ -58,7 +58,9 @@ enum eKeyboardState eKeyboardRead(){
 }
 
 void LedStep(enum eDirection eDirection) {
+	
 		static unsigned int uiCurrentLedIndex = 0;
+	
     if (eDirection == LEFT) {
         uiCurrentLedIndex = (uiCurrentLedIndex + 1) % 4;
     } else {
@@ -120,10 +122,9 @@ int main(){
     }
 		*/
 		
-/*
+
 	enum eKeyboardState eKeyboardState;
 
-    delay(1000);
     LedInit();
     KeyboardInit();
 
@@ -138,34 +139,9 @@ int main(){
                 break;
             case RELASED:
                 break;
-            default:
-                break;
-        }
-        delay(200);
-    }	
-*/
-	 enum eKeyboardState eKeyboardState;
-
-    Delay(1000);
-    LedInit();
-    KeyboardInit();
-
-    while (1) {
-        eKeyboardState = eKeyboardRead();
-        switch (eKeyboardState) {
-            case BUTTON_1:
-                LedStepRight();
-                break;
-            case BUTTON_2:
-                LedStepLeft();
-                break;
-            case RELASED:
-                break;
-            default:
-                break;
         }
         Delay(200);
-    }
+    }	
 
 }
 
