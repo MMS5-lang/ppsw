@@ -107,10 +107,10 @@ int main() {
 
 */ 
 
-/* ZAD 4
-enum eLedState {STOPPED, MOVING_RIGHT};
-enum eLedState eLedState = STOPPED;
-unsigned int uiStepCounter = 0;
+/* Zad 4
+enum eLedState {STOPPED, MOVE_RIGHT};
+enum eLedState eLedState = MOVE_RIGHT;
+unsigned char ucStepCounter = 0;
 
 int main() {
     LedInit();
@@ -119,14 +119,14 @@ int main() {
         switch (eLedState) {
             case STOPPED:
                 if (eKeyboardRead() == BUTTON_0) {
-                    eLedState = MOVING_RIGHT;
-                    uiStepCounter = 0;
+                    eLedState = MOVE_RIGHT;
+                    ucStepCounter = 0;
                 }
                 break;
-            case MOVING_RIGHT:
-                if (uiStepCounter < 3) {
+            case MOVE_RIGHT:
+                if (ucStepCounter < 3) {
                     LedStepRight();
-                    uiStepCounter++;
+                    ucStepCounter++;
                 } else {
                     eLedState = STOPPED;
                 }
@@ -136,3 +136,67 @@ int main() {
     }
 }
 */
+
+/* Zad 5
+enum eLedState {STOPPED, MOVE_RIGHT};
+enum eLedState eLedState = MOE_RIGHT;
+unsigned char ucStepCounter = 0;
+
+int main() {
+    LedInit();
+    KeyboardInit();
+    while (1) {
+        switch (eLedState) {
+            case STOPPED:
+                if (eKeyboardRead() == BUTTON_0) {
+                    eLedState = STOPPED;
+                } else if (eKeyboardRead() == BUTTON_1){
+									eLedState = MOVE_RIGHT;
+								}
+                break;
+            case MOVE_RIGHT:
+                if (eKeyboardRead() != BUTTON_0) {
+                    LedStepRight();
+                } else {
+                    eLedState = STOPPED;
+                }
+                break;
+        }
+        Delay(250);
+    }
+}
+*/
+
+enum eLedState {STOPPED, MOVE_LEFT, MOVE_RIGHT};
+enum eLedState eLedState = STOPPED;
+
+int main() {
+    LedInit();
+    KeyboardInit();
+    while (1) {
+        switch (eLedState) {
+            case STOPPED:
+                if (eKeyboardRead() == BUTTON_0) {
+                    eLedState = MOVE_LEFT;
+                } else if (eKeyboardRead() == BUTTON_2) {
+                    eLedState = MOVE_RIGHT;
+                }
+                break;
+            case MOVE_LEFT:
+                if (eKeyboardRead() == BUTTON_1) {
+                    eLedState = STOPPED;
+                } else {
+                    LedStepLeft();
+                }
+                break;
+            case MOVE_RIGHT:
+                if (eKeyboardRead() == BUTTON_1) {
+                    eLedState = STOPPED;
+                } else {
+                    LedStepRight();
+                }
+                break;
+        }
+        Delay(100);
+    }
+}
