@@ -6,6 +6,8 @@
 #define LED3_bm (1 << 19)
 #define ALL_LEDS_bm (LED0_bm | LED1_bm | LED2_bm | LED3_bm)
 
+enum eDirection {LEFT, RIGHT};
+
 void LedInit(){
 	IO1DIR = IO1DIR | ALL_LEDS_bm;
 	IO1SET=LED0_bm;

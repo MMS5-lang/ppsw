@@ -1,4 +1,3 @@
-#include <LPC21xx.H>
 #include "led.h"
 #include "keyboard.h"
 

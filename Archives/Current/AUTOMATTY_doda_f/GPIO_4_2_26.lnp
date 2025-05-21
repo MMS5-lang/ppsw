@@ -1,0 +1,9 @@
+--cpu ARM7TDMI
+".\startup.o"
+".\gpio_4_2_20.o"
+".\keyboard.o"
+".\led.o"
+--strict --scatter ".\GPIO_4_2_26.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\GPIO_4_2_26.map" -o .\GPIO_4_2_26.axf
