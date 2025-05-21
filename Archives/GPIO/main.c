@@ -79,7 +79,7 @@ void LedStepRight(void) {
 }
 
 int main(){
-/*
+
 	LedInit();
 	KeyboardInit();
 	while (1) {
@@ -103,7 +103,7 @@ int main(){
                 break;
         }
     }
-*/
+
 /*
 		unsigned char ucStepCount = 0;
 		delay(1000);
@@ -122,7 +122,7 @@ int main(){
     }
 		*/
 		
-
+/*
 	enum eKeyboardState eKeyboardState;
 
     LedInit();
@@ -142,7 +142,7 @@ int main(){
         }
         Delay(200);
     }	
-
+*/
 }
 
 
