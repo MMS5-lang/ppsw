@@ -1,0 +1,15 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\milos\Desktop\ppsw\Current\DOD\TIMER_KONIEC(WISH)\GPIO_4_2_26.uvproj
+Project File Date:  05/25/2025
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling timer.c...
+linking...
+Program Size: Code=1268 RO-data=32 RW-data=4 ZI-data=1260  
+FromELF: creating hex file...
+".\GPIO_4_2_26.axf" - 0 Errors, 0 Warning(s).
