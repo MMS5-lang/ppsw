@@ -3,13 +3,16 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\kmie\Desktop\ppsw\Archives\Automaty\main.uvproj
-Project File Date:  05/21/2025
+C:\Users\milos\Desktop\ppsw\Archives\Automaty\main.uvproj
+Project File Date:  05/25/2025
 
 <h2>Output:</h2>
-Clean started: Project: 'main'
-   deleting intermediate output files for target 'Target 1'
-Clean started: Project: 'main'
-   deleting intermediate output files for target 'Target 1'
-Clean started: Project: 'main'
-   deleting intermediate output files for target 'Target 1'
+Build target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling led.c...
+compiling keyboard.c...
+linking...
+Program Size: Code=1312 RO-data=32 RW-data=8 ZI-data=1256  
+FromELF: creating hex file...
+".\main.axf" - 0 Errors, 0 Warning(s).

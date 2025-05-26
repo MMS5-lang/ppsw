@@ -1,11 +1,0 @@
-Dependencies for Project 'GPIO_4_2_26', Target 'Target 1': (DO NOT MODIFY !)
-F (.\Startup.s)(0x682D7ADF)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
-F (.\GPIO_4_2_20.c)(0x682D7D53)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\gpio_4_2_20.o --omf_browse .\gpio_4_2_20.crf --depend .\gpio_4_2_20.d)
-I (C:\Users\kmie\Desktop\ppsw\Current\AUTOMATTY_doda_f\led.h)(0x682D7ADF)
-I (C:\Users\kmie\Desktop\ppsw\Current\AUTOMATTY_doda_f\keyboard.h)(0x682D7ADF)
-F (.\keyboard.c)(0x682D7ADF)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\keyboard.o --omf_browse .\keyboard.crf --depend .\keyboard.d)
-I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
-I (C:\Users\kmie\Desktop\ppsw\Current\AUTOMATTY_doda_f\keyboard.h)(0x682D7ADF)
-F (.\led.c)(0x682D7ADF)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\led.o --omf_browse .\led.crf --depend .\led.d)
-I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
-I (C:\Users\kmie\Desktop\ppsw\Current\AUTOMATTY_doda_f\led.h)(0x682D7ADF)
