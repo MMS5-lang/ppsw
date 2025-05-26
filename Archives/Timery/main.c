@@ -35,3 +35,4 @@ int main(void) {
         WaitOnTimer0Match0();  // Czekaj 500 ms
     }
 }
+

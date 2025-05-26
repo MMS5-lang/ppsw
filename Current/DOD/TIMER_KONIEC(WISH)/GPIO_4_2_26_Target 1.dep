@@ -9,6 +9,6 @@ I (C:\Users\milos\Desktop\ppsw\Current\DOD\TIMER_KONIEC(WISH)\keyboard.h)(0x6833
 F (.\led.c)(0x68337713)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\led.o --omf_browse .\led.crf --depend .\led.d)
 I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
 I (C:\Users\milos\Desktop\ppsw\Current\DOD\TIMER_KONIEC(WISH)\led.h)(0x68337713)
-F (.\timer.c)(0x68337713)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\timer.o --omf_browse .\timer.crf --depend .\timer.d)
+F (.\timer.c)(0x6834B1DC)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\timer.o --omf_browse .\timer.crf --depend .\timer.d)
 I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
 I (C:\Users\milos\Desktop\ppsw\Current\DOD\TIMER_KONIEC(WISH)\timer.h)(0x68337713)
