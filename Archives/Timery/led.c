@@ -5,7 +5,6 @@
 #define LED2_bm (1 << 18)
 #define LED3_bm (1 << 19)
 
-
 enum eDirection {LEFT, RIGHT};
 
 void LedInit(){
@@ -15,7 +14,6 @@ void LedInit(){
 
 void LedOn(unsigned char ucLedIndex) {
 	
-	IO1CLR = (LED0_bm | LED1_bm | LED2_bm | LED3_bm);
 	
 	switch(ucLedIndex){
 		case 0:
@@ -30,6 +28,7 @@ void LedOn(unsigned char ucLedIndex) {
 		case 3:
 			IO1SET = LED3_bm;
 		default:
+			IO1CLR = (LED0_bm | LED1_bm | LED2_bm | LED3_bm);
 			break;
 	}
 }
