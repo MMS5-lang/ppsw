@@ -16,8 +16,8 @@ void InitTimer0(void){
 
 void WaitOnTimer0(unsigned int uiTime) {
 	
-	T0TCR = (T0TCR | COUNTER0_RESET_bm);
-	T0TCR = (T0TCR & (~COUNTER0_RESET_bm));
+	T0TCR = COUNTER0_RESET_bm;
+	T0TCR = ~(COUNTER0_RESET_bm);
 	
 	while(T0TC<((uiTime)*PCLK_FREQ)){} //zegar taktowania wynosi 1/4 taktowania rdzenia procesora, czyli 15 000 cykli na milisekunde, 15 cykli na mikrosekunde
 }
@@ -37,8 +37,8 @@ void InitTimer0Match0(unsigned int iDelayTime) {
     
     T0MCR = (T0MCR | (T0MCR_INTERRUPT_ON_MR0_bm | T0MCR_RESET_ON_MR0_bm));
 	
-    T0TCR = (T0TCR | COUNTER0_RESET_bm);
-		T0TCR = (T0TCR & (~COUNTER0_RESET_bm));
+    T0TCR = COUNTER0_RESET_bm;
+		T0TCR = ~(COUNTER0_RESET_bm);
 	
     T0TCR = COUNTER0_ENABLE_bm;
 }
