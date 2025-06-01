@@ -28,7 +28,7 @@ int main(void) {
     
     while (1) {
 
-        LedOn(2);
+        LedOn(1);
         WaitOnTimer0Match0();  // Czekaj 500 ms
         
 				LedOn(4);

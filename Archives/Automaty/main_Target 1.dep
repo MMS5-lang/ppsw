@@ -4,8 +4,8 @@ F (.\main.c)(0x68337713)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I
 I (C:\Users\milos\Desktop\ppsw\Archives\Automaty\led.h)(0x68337713)
 I (C:\Users\milos\Desktop\ppsw\Archives\Automaty\keyboard.h)(0x68337713)
 F (.\led.c)(0x68349119)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\led.o --omf_browse .\led.crf --depend .\led.d)
-I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x68361E35)
 I (C:\Users\milos\Desktop\ppsw\Archives\Automaty\led.h)(0x68337713)
 F (.\keyboard.c)(0x68348F2A)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\keyboard.o --omf_browse .\keyboard.crf --depend .\keyboard.d)
-I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x68361E35)
 I (C:\Users\milos\Desktop\ppsw\Archives\Automaty\keyboard.h)(0x68337713)

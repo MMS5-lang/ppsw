@@ -45,6 +45,6 @@ void InitTimer0Match0(unsigned int iDelayTime) {
 
 void WaitOnTimer0Match0(void) {
     while ((T0IR & T0IR_MR0_INTERRUPT_bm) == 0) {} // Czekanie na flage przerwania w T0IR
-    T0IR = (T0IR | T0IR_MR0_INTERRUPT_bm); // Czyszczenie flagi przerwania (zapis 1 do bitu 0 w T0IR)
+    T0IR = (T0IR | T0IR_MR0_INTERRUPT_bm); // Czyszczenie flagi przerwania (zapis 1 do bitu 0 w T0IR) str 217 manual
 }
 

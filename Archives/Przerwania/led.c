@@ -14,6 +14,7 @@ void LedInit(){
 
 void LedOn(unsigned char ucLedIndex) {
 	
+	IO1CLR = (LED0_bm | LED1_bm | LED2_bm | LED3_bm);
 	
 	switch(ucLedIndex){
 		case 0:
