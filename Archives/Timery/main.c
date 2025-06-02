@@ -2,7 +2,7 @@
 #include "keyboard.h"
 #include "timer.h"
 
-/* test 1
+
 int main(void) {
 
     InitTimer0();
@@ -17,9 +17,10 @@ int main(void) {
     }
     
 }
-*/
+
 
 //test drugiego cwiczenia
+/*
 int main(void) {
     
     InitTimer0Match0(500000); // Inicjalizacja Timera0 z opóznieniem 500 ms (500000 µs) przy uzyciu bloku porównujacego
@@ -35,4 +36,4 @@ int main(void) {
         WaitOnTimer0Match0();  // Czekaj 500 ms
     }
 }
-
+*/

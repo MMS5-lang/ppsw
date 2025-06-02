@@ -166,14 +166,16 @@ int main() {
 }
 */
 
-enum eLedState {STOPPED, MOVE_LEFT, MOVE_RIGHT, WIPPER};
+enum eLedState {STOPPED, MOVE_LEFT, MOVE_RIGHT, WIPPER, WAIT};
 enum eLedState eLedState = STOPPED;
-unsigned char ucWiperIndex;
-unsigned char ucledIndex;
+
 int main() {
     LedInit();
     KeyboardInit();
     while (1) {
+			
+			static unsigned char sucStep = 0;
+			
         switch (eLedState) {
 					
             case STOPPED:
@@ -188,7 +190,7 @@ int main() {
                 if (eKeyboardRead() == BUTTON_1) {
                     eLedState = STOPPED;
                 } else if (eKeyboardRead() == BUTTON_3){
-										ucWiperIndex = 0;
+										sucStep = 0;
 										eLedState = WIPPER;
 								} else {
                     LedStepLeft();
@@ -204,20 +206,27 @@ int main() {
                 break;
 								
 						case WIPPER:
-							if (ucWiperIndex >= 14) {
-								eLedState = MOVE_RIGHT;
-								ucWiperIndex = 0;
+							if (sucStep >= 4) {
+								eLedState = WAIT;
 							} else {
-                  if ((ucWiperIndex % 7) <= 3) {
-                   ucledIndex = (ucWiperIndex % 7); 
+                  if ((sucStep == 0) || (sucStep == 2)){
+                   LedStepLeft();
+									 sucStep++;
                     } else {
-                       ucledIndex = 6 - (ucWiperIndex % 7); 
+                     LedStepRight();
+										 sucStep++;
                     }
-                    LedOn(ucledIndex);
-                    ucWiperIndex++;
+                }
+                break;
+            case WAIT:
+                if (eKeyboardRead() == BUTTON_2) {
+                    eLedState = MOVE_RIGHT;
+                } else {
+                    eLedState = WAIT;
                 }
                 break;
         }
         Delay(100);
     }
 }
+

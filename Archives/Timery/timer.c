@@ -11,15 +11,15 @@
 #define PCLK_FREQ 15 //zegar taktowania wynosi 1/4 taktowania rdzenia procesora, czyli 15 000 cykli na milisekunde, 15 cykli na mikrosekunde
 
 void InitTimer0(void){
-	T0TCR = COUNTER0_ENABLE_bm; 
+	T0TCR = COUNTER0_ENABLE_bm; //uruchamia nam zliczanie cykli zegara
 }
 
 void WaitOnTimer0(unsigned int uiTime) {
 	
-	T0TCR = COUNTER0_RESET_bm; //reset
+	T0TCR = COUNTER0_RESET_bm; //reset timera0
 	T0TCR = ~(COUNTER0_RESET_bm); //usuniecie flagi resetu
 	
-	while(T0TC<((uiTime)*PCLK_FREQ)){} //zegar taktowania wynosi 1/4 taktowania rdzenia procesora, czyli 15 000 cykli na milisekunde, 15 cykli na mikrosekunde
+	while(T0TC !=((uiTime)*PCLK_FREQ)){} //aby to dzialalo powinnismi zmiejszyc czestotliosc zliczania pclk
 }
 
 //informacje o rejestrze, ktory ustawia 'porownania' z rejestrem zliczajacym sa w manualu na stronie 218 (T0MCR T1MCR), tzw blok porownujacy
@@ -34,14 +34,16 @@ po kolei bity rejestru T0MRC (stan wysoki):
 
 void InitTimer0Match0(unsigned int iDelayTime) {
     T0MR0 = (iDelayTime * PCLK_FREQ);  // PCLK = 15 MHz, 1 µs = 15 cykli, to co wyzej
-    T0MCR = (T0MCR | (T0MCR_INTERRUPT_ON_MR0_bm | T0MCR_RESET_ON_MR0_bm)); //suma bitowa, poniewaz nie chce aby np kontrola MR1 sie zerowala
+    T0MCR = (T0MCR | (T0MCR_INTERRUPT_ON_MR0_bm | T0MCR_RESET_ON_MR0_bm)); //po osiagnieciu wartosci MR0 przez timer0 wysyla flage przerwania i zeruje sie timer
 	
-    T0TCR = COUNTER0_RESET_bm;
-		T0TCR = ~(COUNTER0_RESET_bm);
+    T0TCR = COUNTER0_RESET_bm; //resetuje wartosc timera
+		T0TCR = ~(COUNTER0_RESET_bm); //usuwa flage resetu timera
 }
 
 void WaitOnTimer0Match0(void) {
     while ((T0IR & T0IR_MR0_INTERRUPT_bm) == 0) {} // Czekanie na flage przerwania w T0IR
-    T0IR = T0IR_MR0_INTERRUPT_bm; // Czyszczenie flagi przerwania (zapis 1 do bitu 0 w T0IR)
+    T0IR = T0IR | T0IR_MR0_INTERRUPT_bm; // Czyszczenie flagi przerwania (zapis 1 do bitu 0 w T0IR), manual str 217
 }
-
+//  T0IR                              1111
+//  T0IR_MR0_INTERRUPT_bm             0001
+//                                  | 1111
