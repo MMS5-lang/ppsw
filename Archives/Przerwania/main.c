@@ -22,8 +22,7 @@ void Automat(){
 				case STATE_LEFT:
 						if(eKeyboardRead() == BUTTON_1){
 										seLedState = STATE_STOP;
-								}
-								else{
+								}else{
 										LedStepLeft();
 										seLedState = STATE_LEFT;
 								}
@@ -32,11 +31,9 @@ void Automat(){
 				case STATE_STOP:
 						if(eKeyboardRead() == BUTTON_0){
 										seLedState = STATE_LEFT;
-								}
-								else if(eKeyboardRead() == BUTTON_2){
+								}else if(eKeyboardRead() == BUTTON_2){
 										seLedState = STATE_RIGHT;
-								}
-								else{
+								}else{
 										seLedState = STATE_STOP;
 								}
 								break;
@@ -51,7 +48,7 @@ int main (){
 	
 		unsigned int iMainLoopCtr;
 	
-		Timer0Interrupts_Init(20000, &Automat);
+		Timer0Interrupts_Init(200000, &Automat);
 		LedInit();
 		KeyboardInit();
 

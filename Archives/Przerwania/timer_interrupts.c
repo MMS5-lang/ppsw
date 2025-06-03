@@ -1,3 +1,63 @@
+#include <LPC21xx.H> 
+#include "timer_interrupts.h"
+
+// Definicje masek bitowych dla Timera 0
+#define mCOUNTER_ENABLE   (1 << 0)
+#define mCOUNTER_RESET    (1 << 1)
+
+// Definicje masek bitowych dla modulu porównania Timera 0 (Match Control Register)
+#define mINTERRUPT_ON_MR0 (1 << 0)
+#define mRESET_ON_MR0     (1 << 1)
+#define mMR0_INTERRUPT    (1 << 0) 
+
+// Definicje dla VIC (Vector Interrupt Controller)
+#define VIC_TIMER0_CHANNEL_NR 4    // Kanal 4 w VIC odpowiada Timer0 (str. 67 manuala)
+#define mIRQ_SLOT_ENABLE  (1 << 5) // Bit 5 w VICVectCntl: wlacza slot przerwania (str. 74 manuala)
+
+// Globalny wskaznik na funkcje, która bedzie wywolywana w przerwaniu
+void (*ptrTimer0InterruptFunction)(void);
+
+// Procedura obslugi przerwania (ISR - Interrupt Service Routine) Timera 0
+// __irq oznacza, ze jest to ISR; kompilator generuje odpowiedni kod wejscia/wyjscia dla trybu IRQ
+__irq void Timer0IRQHandler(void) {
+    T0IR = mMR0_INTERRUPT; // Czysci flage przerwania MR0 w Timer0 (zapis 1 do bitu 0 w T0IR, str. 217)
+                           // Bez tego VIC nie wiedzialby, ze przerwanie zostalo obsluzone
+    ptrTimer0InterruptFunction(); // Wywoluje funkcje uzytkownika przypisana do przerwania
+                                  // Umozliwia dynamiczna zmiane akcji w przerwaniu
+    VICVectAddr = 0x00; // Potwierdza zakonczenie obslugi przerwania w VIC (zapis 0 do VICVectAddr, str. 72)
+                        // Informuje VIC, ze ISR sie zakonczylo, umozliwiajac obsluge kolejnych przerwan
+}
+
+// Funkcja inicjalizujaca przerwania Timera 0
+// Przyjmuje okres (w mikrosekundach) i wskaznik na funkcje do wywolania w przerwaniu
+void Timer0Interrupts_Init(unsigned int uiPeriod, void (*ptrInterruptFunction)(void)) {
+    // Przypisanie funkcji uzytkownika do globalnego wskaznika
+    ptrTimer0InterruptFunction = ptrInterruptFunction; // Funkcja ptrInterruptFunction bedzie wywolywana w ISR
+
+    // Konfiguracja VIC (Vector Interrupt Controller)
+    VICIntEnable |= (0x1 << VIC_TIMER0_CHANNEL_NR); // Wlacza kanal 4 (Timer0) w VIC (str. 70)
+                                                    // Umozliwia VIC odbieranie przerwan z Timera 0
+    VICVectCntl1 = mIRQ_SLOT_ENABLE | VIC_TIMER0_CHANNEL_NR; // Konfiguruje slot 1 w VIC:
+                                                             // - Bit 5 (mIRQ_SLOT_ENABLE) wlacza slot
+                                                             // - Bity 0-4 (VIC_TIMER0_CHANNEL_NR) przypisuja kanal 4 (Timer0)
+                                                             // (str. 74 manuala)
+    VICVectAddr1 = (unsigned long)Timer0IRQHandler; // Ustawia adres procedury ISR (Timer0IRQHandler) dla slotu 1
+                                                    // VIC bedzie skakal do tej procedury przy przerwaniu z Timera 0
+                                                    // (str. 73 manuala)
+
+    // Konfiguracja Timera 0
+    T0MR0 = (15 * uiPeriod); // Ustawia wartosc w rejestrze Match Register 0 (T0MR0)
+                             // uiPeriod w mikrosekundach; PCLK = 15 MHz, wiec 1 µs = 15 cykli
+                             // Przykladowo, dla uiPeriod = 1000 µs, T0MR0 = 15 * 1000 = 15 000 cykli (1 ms)
+    T0MCR |= (mINTERRUPT_ON_MR0 | mRESET_ON_MR0); // Konfiguruje Match Control Register (T0MCR):
+                                                  // - mINTERRUPT_ON_MR0: generuje przerwanie po osiagnieciu T0MR0
+                                                  // - mRESET_ON_MR0: resetuje licznik po osiagnieciu T0MR0
+                                                  // (str. 218 manuala)
+    T0TCR |= mCOUNTER_ENABLE; // Wlacza zliczanie cykli w Timer0 (bit 0 w T0TCR, str. 217)
+                              // Timer zaczyna zliczac cykle zegara PCLK, generujac przerwania co zadany okres
+}
+
+
 /*
 Wejscie (IntEnable): Na poczatku VIC ma uklad, który pozwala wlaczac lub wylaczac przerwania z poszczególnych kanalów (1-wlaczone 0-wylaczone)
 Sloty (VectorInterrupt0-15): VIC ma 16 "slotów" – to takie miejsca, gdzie mozna przypisac konkretne przerwania i powiedziec, co z nimi robic
@@ -127,45 +187,5 @@ int main() {
 }
 */
 
-#include <LPC21xx.H>
-#include "timer_interrupts.h"
 
-// Definicje dla Timera 0
-#define mCOUNTER_ENABLE   (1 << 0)
-#define mCOUNTER_RESET    (1 << 1)
-
-// Definicje dla modulu porównania Timera 0
-#define mINTERRUPT_ON_MR0 (1 << 0)
-#define mRESET_ON_MR0     (1 << 1)
-#define mMR0_INTERRUPT    (1 << 0)
-
-// Definicje dla VIC
-#define VIC_TIMER0_CHANNEL_NR 4
-#define mIRQ_SLOT_ENABLE  (1 << 5)
-
-// Globalny wskaznik na funkcje
-void (*ptrTimer0InterruptFunction)(void);
-
-// Funkcja obslugi przerwania
-__irq void Timer0IRQHandler(void) {
-    T0IR = mMR0_INTERRUPT; // Wyczysc flage przerwania
-		ptrTimer0InterruptFunction();
-    VICVectAddr = 0x00; // Zakoncz obsluge przerwania
-}
-
-// Inicjalizacja timera z funkcja przerwania
-void Timer0Interrupts_Init(unsigned int uiPeriod, void (*ptrInterruptFunction)(void)) {
-	
-    ptrTimer0InterruptFunction = ptrInterruptFunction; // Przypisz wskaznik na funkcje
-
-    // Konfiguracja VIC
-    VICIntEnable |= (1 << VIC_TIMER0_CHANNEL_NR);
-    VICVectCntl1 = mIRQ_SLOT_ENABLE | VIC_TIMER0_CHANNEL_NR;
-    VICVectAddr1 = (unsigned long)Timer0IRQHandler; //Typ (unsigned long) jest uzywany, poniewaz adres funkcji musi byc zapisany w formacie 32-bitowej liczby calkowitej bez znaku
-
-    // Konfiguracja timera
-    T0MR0 = 15 * uiPeriod; // uiPeriod w mikrosekundach, PCLK=15MHz
-    T0MCR |= (mINTERRUPT_ON_MR0 | mRESET_ON_MR0);
-    T0TCR |= mCOUNTER_ENABLE; // Wlacz timer
-}
 
