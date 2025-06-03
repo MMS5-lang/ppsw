@@ -11,20 +11,22 @@
 #define mMR0_INTERRUPT    (1 << 0) 
 
 // Definicje dla VIC (Vector Interrupt Controller)
-#define VIC_TIMER0_CHANNEL_NR 4    // Kanal 4 w VIC odpowiada Timer0 (str. 67 manuala)
-#define mIRQ_SLOT_ENABLE  (1 << 5) // Bit 5 w VICVectCntl: wlacza slot przerwania (str. 74 manuala)
+#define VIC_TIMER0_CHANNEL_NR 4    // Kanal 4 w VIC odpowiada Timer0 
+#define mIRQ_SLOT_ENABLE  (1 << 5) // Bit 5 w VICVectCntl: wlacza slot przerwania 
 
 // Globalny wskaznik na funkcje, która bedzie wywolywana w przerwaniu
 void (*ptrTimer0InterruptFunction)(void);
 
 // Procedura obslugi przerwania (ISR - Interrupt Service Routine) Timera 0
 // __irq oznacza, ze jest to ISR; kompilator generuje odpowiedni kod wejscia/wyjscia dla trybu IRQ
+//Jest to procedura obslugi przerwania (ISR – Interrupt Service Routine), która automatycznie wykonuje sie, gdy Timer 0 zglosi przerwanie
+//Ta funkcja dziala jako "most" miedzy sprzetem (Timer 0 i VIC) a oprogramowaniem (funkcja uzytkownika)
 __irq void Timer0IRQHandler(void) {
     T0IR = mMR0_INTERRUPT; // Czysci flage przerwania MR0 w Timer0 (zapis 1 do bitu 0 w T0IR, str. 217)
                            // Bez tego VIC nie wiedzialby, ze przerwanie zostalo obsluzone
     ptrTimer0InterruptFunction(); // Wywoluje funkcje uzytkownika przypisana do przerwania
                                   // Umozliwia dynamiczna zmiane akcji w przerwaniu
-    VICVectAddr = 0x00; // Potwierdza zakonczenie obslugi przerwania w VIC (zapis 0 do VICVectAddr, str. 72)
+    VICVectAddr = 0x00; // Potwierdza zakonczenie obslugi przerwania w VIC (zapis 0 do VICVectAddr)
                         // Informuje VIC, ze ISR sie zakonczylo, umozliwiajac obsluge kolejnych przerwan
 }
 
@@ -35,15 +37,13 @@ void Timer0Interrupts_Init(unsigned int uiPeriod, void (*ptrInterruptFunction)(v
     ptrTimer0InterruptFunction = ptrInterruptFunction; // Funkcja ptrInterruptFunction bedzie wywolywana w ISR
 
     // Konfiguracja VIC (Vector Interrupt Controller)
-    VICIntEnable |= (0x1 << VIC_TIMER0_CHANNEL_NR); // Wlacza kanal 4 (Timer0) w VIC (str. 70)
+    VICIntEnable |= (0x1 << VIC_TIMER0_CHANNEL_NR); // Wlacza kanal 4 (Timer0) w VIC
                                                     // Umozliwia VIC odbieranie przerwan z Timera 0
     VICVectCntl1 = mIRQ_SLOT_ENABLE | VIC_TIMER0_CHANNEL_NR; // Konfiguruje slot 1 w VIC:
                                                              // - Bit 5 (mIRQ_SLOT_ENABLE) wlacza slot
                                                              // - Bity 0-4 (VIC_TIMER0_CHANNEL_NR) przypisuja kanal 4 (Timer0)
-                                                             // (str. 74 manuala)
     VICVectAddr1 = (unsigned long)Timer0IRQHandler; // Ustawia adres procedury ISR (Timer0IRQHandler) dla slotu 1
                                                     // VIC bedzie skakal do tej procedury przy przerwaniu z Timera 0
-                                                    // (str. 73 manuala)
 
     // Konfiguracja Timera 0
     T0MR0 = (15 * uiPeriod); // Ustawia wartosc w rejestrze Match Register 0 (T0MR0)
