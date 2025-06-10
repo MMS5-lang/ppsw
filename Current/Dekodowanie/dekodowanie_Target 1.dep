@@ -1,0 +1,12 @@
+Dependencies for Project 'dekodowanie', Target 'Target 1': (DO NOT MODIFY !)
+F (.\Startup.s)(0x51C80D6E)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x68485505)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x68361E35)
+I (C:\Users\milos\Desktop\ppsw\Current\Dekodowanie\konwersje.h)(0x68484453)
+I (C:\Users\milos\Desktop\ppsw\Current\Dekodowanie\lancuchy.h)(0x68484469)
+F (.\konwersje.c)(0x68484404)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\konwersje.o --omf_browse .\konwersje.crf --depend .\konwersje.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x68361E35)
+I (C:\Users\milos\Desktop\ppsw\Current\Dekodowanie\konwersje.h)(0x68484453)
+F (.\lancuchy.c)(0x68484470)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\lancuchy.o --omf_browse .\lancuchy.crf --depend .\lancuchy.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x68361E35)
+I (C:\Users\milos\Desktop\ppsw\Current\Dekodowanie\lancuchy.h)(0x68484469)

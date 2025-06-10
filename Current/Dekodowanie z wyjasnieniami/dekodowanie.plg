@@ -1,0 +1,17 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\milos\Desktop\ppsw\Current\Dekodowanie z wyjasnieniami\dekodowanie.uvproj
+Project File Date:  06/10/2025
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling Startup.s...
+compiling main.c...
+compiling konwersje.c...
+compiling lancuchy.c...
+linking...
+Program Size: Code=1588 RO-data=32 RW-data=52 ZI-data=1284  
+".\dekodowanie.axf" - 0 Errors, 0 Warning(s).
